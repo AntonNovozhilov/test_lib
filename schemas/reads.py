@@ -10,8 +10,10 @@ class ReaderBase(BaseModel):
 class ReaderCreate(ReaderBase):
     pass
 
+class ReaderUpdate(ReaderBase):
+    pass
 
-class Reader(ReaderBase):
+class ReaderResponse(ReaderBase):
     id: int
 
 

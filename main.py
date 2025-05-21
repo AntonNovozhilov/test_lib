@@ -8,6 +8,7 @@ from models.db_helper import engine
 from schemas.user import UserCreate
 from api.auth import auth_router
 from api.book import book
+from api.reader import reader
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -18,6 +19,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.include_router(auth_router)
 app.include_router(book)
+app.include_router(reader)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)
