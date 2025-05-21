@@ -1,5 +1,7 @@
+import os
 from datetime import datetime, timedelta, timezone
 
+from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
@@ -10,7 +12,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from models.db_helper import get_session
 from models.user import User
 
-SECRET_KEY = "df40e2020609ba29533053a303a34792f019bc0ce6e425f32f8c5726eb016ab6"
+load_dotenv()
+
+SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
