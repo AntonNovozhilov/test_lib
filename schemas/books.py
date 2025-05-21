@@ -9,9 +9,13 @@ class BookBase(BaseModel):
     year: Optional[int]
     isbn: Optional[str]
     count: int = Field(default=1, ge=0)
+    description: str
 
 
 class BookCreat(BookBase):
+    pass
+
+class BookUpdate(BookBase):
     pass
 
 class BookResponse(BookBase):
