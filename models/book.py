@@ -2,7 +2,6 @@ from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import ForeignKey
 
 from models.base import Base
-from models.author import Author
 
 
 class Book(Base):
@@ -10,7 +9,7 @@ class Book(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(nullable=False)
-    author: Mapped[str] = mapped_column(nullable=False)
+    author_id: Mapped[str] = mapped_column(nullable=False)
     year: Mapped[int] = mapped_column(nullable=True)
     isbn: Mapped[str] = mapped_column(nullable=True, unique=True)
     count: Mapped[int] = mapped_column(nullable=True, default=1)

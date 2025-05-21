@@ -1,4 +1,3 @@
-from .author import Author
 from .base import Base
 from .book import Book
 from .borrowedbooks import BorrowedBook

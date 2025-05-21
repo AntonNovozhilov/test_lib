@@ -2,9 +2,10 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from passlib.context import CryptContext
-from datetime import datetime, timedelta
-from sqlalchemy.orm import Session
-from .schemas.user import User
+from datetime import datetime, timedelta, timezone
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+from schemas.user import UserLogin
 
 
 SECRET_KEY = 'df40e2020609ba29533053a303a34792f019bc0ce6e425f32f8c5726eb016ab6'
@@ -23,20 +24,20 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-def get_user(db: Session, email: str):
-    if email in db:
-        user_dict = db[email]
-        return User(**user_dict)
+async def get_user(db: AsyncSession, email: str):
+    result = await db.execute(select(User).where(User.email == email))
+    user = result.scalars().first()
+    return user
 
-def authenticate_user(db: Session, email: str, password: str):
-    user = get_user(db, email)
+async def authenticate_user(db: AsyncSession, email: str, password: str):
+    user = await get_user(db, email)
     if not user or not verify_password(password, user.hashed_password):
         return False
     return user
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
-    expire = datetime.now() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+    expire = datetime.now(tz=timezone.utc) + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 

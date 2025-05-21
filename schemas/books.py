@@ -2,10 +2,10 @@ from pydantic import BaseModel, Field
 from typing import Optional
 
 
-class BookBase():
+class BookBase(BaseModel):
     """Docstring"""
     title: str
-    author: int
+    author_id: str
     year: Optional[int]
     isbn: Optional[str]
     count: int = Field(default=1, ge=0)
