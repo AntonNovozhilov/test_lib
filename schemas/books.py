@@ -5,7 +5,7 @@ from typing import Optional
 class BookBase(BaseModel):
     """Docstring"""
     title: str
-    author_id: str
+    author: str
     year: Optional[int]
     isbn: Optional[str]
     count: int = Field(default=1, ge=0)
