@@ -1,13 +1,20 @@
 from datetime import datetime
-from pydantic import BaseModel
 from typing import Optional
 
+from pydantic import BaseModel
 
-class Borrow(BaseModel):
+
+class BorrowBook(BaseModel):
+    id: int
     book_id: int
     reader_id: int
-    borrow_date: datetime
-    return_date: Optional[str]
+    borrowed_date: datetime
+    return_date: Optional[datetime]
+
+
+class BorrowBookResponse(BaseModel):
+    book_id: int
+    reader_id: int
 
     class Config:
         orm_mode = True

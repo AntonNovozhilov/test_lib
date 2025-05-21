@@ -1,5 +1,4 @@
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models.base import Base
 
@@ -14,4 +13,6 @@ class Book(Base):
     isbn: Mapped[str] = mapped_column(nullable=True, unique=True)
     count: Mapped[int] = mapped_column(nullable=True, default=1)
     description: Mapped[str] = mapped_column(nullable=True)
-
+    borrowed_books: Mapped[list["BorrowedBook"]] = relationship(
+        back_populates="book", cascade="all, delete-orphan"
+    )

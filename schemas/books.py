@@ -1,9 +1,11 @@
-from pydantic import BaseModel, Field
 from typing import Optional
+
+from pydantic import BaseModel, Field
 
 
 class BookBase(BaseModel):
     """Docstring"""
+
     title: str
     author: str
     year: Optional[int]
@@ -15,12 +17,13 @@ class BookBase(BaseModel):
 class BookCreat(BookBase):
     pass
 
+
 class BookUpdate(BookBase):
     pass
 
+
 class BookResponse(BookBase):
     id: int
-
 
     class Config:
         orm_mode = True
